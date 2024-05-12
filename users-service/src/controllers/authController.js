@@ -5,8 +5,6 @@ async function register(req, res) {
   try {
     const { username, email, password } = req.body;
 
-    console.log(req.body);
-
     const newUser = await authService.registerUser({
       username,
       email,

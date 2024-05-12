@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const courseController = require("../controllers/courseController");
-const authMiddleware = require("../middlewares/authMiddleware");
-const tokenMiddleware = require("../middlewares/tokenMiddleware");
 
 /**
  * @swagger
@@ -29,11 +27,6 @@ const tokenMiddleware = require("../middlewares/tokenMiddleware");
  *           type: string
  */
 
-router.get(
-  "/courses",
-  authMiddleware,
-  tokenMiddleware,
-  courseController.getCoursesByUserId
-);
+router.get("/courses", courseController.getCoursesByUserId);
 
 module.exports = router;

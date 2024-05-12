@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/authController");
-const authMiddleware = require("../middlewares/authMiddleware");
-const tokenMiddleware = require("../middlewares/tokenMiddleware");
 
 /**
  * @swagger
@@ -91,7 +89,7 @@ router.post("/login", authController.login);
  *           type: string
  */
 
-router.post("/logout", authMiddleware, tokenMiddleware, authController.logout);
+router.post("/logout", authController.logout);
 
 /**
  * @swagger
@@ -120,11 +118,6 @@ router.post("/logout", authMiddleware, tokenMiddleware, authController.logout);
  *           type: string
  */
 
-router.get(
-  "/me",
-  authMiddleware,
-  tokenMiddleware,
-  authController.getUserByEmail
-);
+router.get("/me", authController.getUserByEmail);
 
 module.exports = router;

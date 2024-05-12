@@ -1,7 +1,7 @@
 const courseService = require("../services/courseService");
 
 async function getCoursesByUserId(req, res) {
-  const userId = req.userId;
+  const userId = req.headers["x-user-id"];
   try {
     const courses = await courseService.getCoursesByUserId(userId);
 

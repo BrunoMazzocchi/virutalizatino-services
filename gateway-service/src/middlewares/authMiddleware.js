@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = process.env.JWT_SECRET;
-const mysqlClient = require("../config/db/databaseConnection");
 
+const mysqlClient = require("../config/db/databaseConnection");
+const JWT_SECRET = process.env.JWT_SECRET;
 async function authMiddleware(req, res, next) {
   const token = req.headers.authorization;
 
@@ -11,7 +11,7 @@ async function authMiddleware(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded.user;
+    req.userId = decoded.userId;
 
     // Check if token exists in the database blacklist
     const query = `SELECT * FROM expired_token WHERE token = '${token}'`;
@@ -24,7 +24,7 @@ async function authMiddleware(req, res, next) {
     });
 
     if (result.length > 0) {
-      return res.status(401).json({ message: "Invalid token" });
+      return res.status(401).json({ message: "Invalid token not found" });
     }
 
     next();
