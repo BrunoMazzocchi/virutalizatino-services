@@ -13,7 +13,7 @@ const usersServiceProxy = createProxyMiddleware({
 });
 
 const postsServiceProxy = createProxyMiddleware({
-  target: "http://localhost:3001",
+  target: "http://localhost:3002",
   changeOrigin: true,
   pathRewrite: {
     "^/posts": "/",
