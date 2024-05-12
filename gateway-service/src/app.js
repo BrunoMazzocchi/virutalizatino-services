@@ -1,7 +1,6 @@
 const express = require("express");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const authMiddleware = require("./middlewares/authMiddleware");
-const tokenMiddleware = require("./middlewares/tokenMiddleware");
 const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,17 +26,13 @@ const postsServiceProxy = createProxyMiddleware({
   // Gets the req
   on: {
     proxyReq: (proxyReq, req) => {
-      // Adding userId to the query string
       let originalPath = proxyReq.path;
-      const userId = req.userId; // You can dynamically assign this based on actual req properties or other logic
-
-      // Append userId to the query string
+      const userId = req.userId;
       proxyReq.path =
         originalPath +
         (originalPath.includes("?") ? "&" : "?") +
         `userId=${userId}`;
 
-      // Alternatively, if you need to set headers instead
       proxyReq.setHeader("X-User-Id", userId);
     },
   },
@@ -45,12 +40,7 @@ const postsServiceProxy = createProxyMiddleware({
 
 // Routes
 app.use("/users", usersServiceProxy);
-app.use("/posts", authMiddleware, tokenMiddleware, postsServiceProxy);
-
-// Define protected routes
-app.get("/courses", (req, res) => {
-  res.json({ message: "Courses fetched successfully" });
-});
+app.use("/posts", authMiddleware, postsServiceProxy);
 
 // Error handling
 app.use((err, req, res, next) => {

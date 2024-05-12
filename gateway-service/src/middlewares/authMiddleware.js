@@ -14,7 +14,7 @@ async function authMiddleware(req, res, next) {
     req.userId = decoded.userId;
 
     // Check if token exists in the database blacklist
-    const query = `SELECT * FROM expired_token WHERE token = '${token}'`;
+    const query = `SELECT * FROM auth_user.expired_token WHERE token = '${token}'`;
 
     const result = await new Promise((resolve, reject) => {
       mysqlClient.query(query, (err, result) => {
