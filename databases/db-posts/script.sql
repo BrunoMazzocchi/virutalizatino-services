@@ -1,5 +1,4 @@
-DROP DATABASE IF EXISTS posts;
-
+IF EXISTS (SELECT * FROM information_schema.tables WHERE table_schema = 'posts' AND table_name = 'posts') BEGIN PRINT 'Table already exists. Skipping creation.'; END ELSE BEGIN USE posts;
 CREATE DATABASE posts;
 
 USE posts;

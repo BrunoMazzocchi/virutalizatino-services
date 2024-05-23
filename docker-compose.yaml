@@ -7,30 +7,14 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DATABASE_HOST=db1
+      - DATABASE_HOST=db2
       - DATABASE_USER=root
       - DATABASE_PASSWORD=Temporal2021+
-      - DATABASE_NAME=auth_user
+      - DATABASE_NAME=users
       - DATABASE_PORT=3306
     depends_on:
-      db1:
+      db2:
         condition: service_healthy
-
-  db1:
-    build:
-      context: ./databases/db-gateway
-    environment:
-      MYSQL_ROOT_PASSWORD: Temporal2021+
-      MYSQL_DATABASE: auth_user
-    ports:
-      - "3306:3306"
-    volumes:
-      - db1_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   users:
     build:
@@ -95,6 +79,5 @@ services:
       retries: 5
 
 volumes:
-  db1_data:
   db2_data:
   db3_data:
