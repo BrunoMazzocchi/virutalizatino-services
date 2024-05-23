@@ -17,7 +17,8 @@ services:
         condition: service_healthy
 
   db1:
-    image: mysql:5.7
+    build:
+      context: ./databases/db-gateway
     environment:
       MYSQL_ROOT_PASSWORD: Temporal2021+
       MYSQL_DATABASE: auth_user
@@ -47,7 +48,8 @@ services:
         condition: service_healthy
 
   db2:
-    image: mysql:5.7
+    build:
+      context: ./databases/db-users
     environment:
       MYSQL_ROOT_PASSWORD: Temporal2021+
       MYSQL_DATABASE: users
@@ -77,7 +79,8 @@ services:
         condition: service_healthy
 
   db3:
-    image: mysql:5.7
+    build:
+      context: ./databases/db-posts
     environment:
       MYSQL_ROOT_PASSWORD: Temporal2021+
       MYSQL_DATABASE: posts

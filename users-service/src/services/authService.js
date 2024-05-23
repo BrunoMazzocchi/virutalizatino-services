@@ -29,6 +29,24 @@ async function registerUser(userData) {
   }
 }
 
+async function getUserByEmail(email) {
+  const query = `SELECT * FROM users WHERE email = '${email}'`;
+
+  const result = await new Promise((resolve, reject) => {
+    mysqlClient.query(query, (err, result) => {
+      if (err) reject(err);
+      resolve(result);
+    });
+  });
+
+  const newUser = new User();
+  newUser.username = result[0].name;
+  newUser.email = result[0].email;
+  newUser.userId = result[0].user_id;
+
+  return newUser;
+}
+
 async function loginUser(email, password) {
   try {
     const query = `SELECT * FROM users WHERE email = '${email}'`;
