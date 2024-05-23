@@ -1,9 +1,12 @@
 const express = require("express");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const authMiddleware = require("./middlewares/authMiddleware");
+const cors = require("cors");
+
 const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
+app.use(cors());
 
 require("dotenv").config({
   path: path.resolve(__dirname, "./config/env/dev.env"),
