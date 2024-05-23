@@ -10,7 +10,7 @@ require("dotenv").config({
 });
 
 const usersServiceProxy = createProxyMiddleware({
-  target: "http://localhost:3001",
+  target: "http://users:3002", // Use the service name defined in docker-compose.yml
   changeOrigin: true,
   pathRewrite: {
     "^/users": "/",
@@ -18,12 +18,11 @@ const usersServiceProxy = createProxyMiddleware({
 });
 
 const postsServiceProxy = createProxyMiddleware({
-  target: "http://localhost:3002",
+  target: "http://posts:3003", // Use the service name defined in docker-compose.yml
   changeOrigin: true,
   pathRewrite: {
     "^/posts": "/",
   },
-  // Gets the req
   on: {
     proxyReq: (proxyReq, req) => {
       let originalPath = proxyReq.path;
