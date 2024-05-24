@@ -29,4 +29,6 @@ const courseController = require("../controllers/courseController");
 
 router.get("/courses", courseController.getCoursesByUserId);
 
+router.post("/courses/:courseId/remove", courseController.removeCourse);
+
 module.exports = router;

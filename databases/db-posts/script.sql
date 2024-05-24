@@ -22,3 +22,22 @@ CREATE TABLE `user_course` (
   KEY `course_id` (`course_id`),
   CONSTRAINT `courses_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`)
 ) ;
+
+CREATE TABLE `removed_course` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_course_id` int DEFAULT NULL,
+  `available_date` DATE DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `removed_course_ibfk_1` FOREIGN KEY (`user_course_id`) REFERENCES `user_course` (`id`)
+);
+
+DELIMITER //
+
+CREATE TRIGGER `set_available_date`
+BEFORE INSERT ON `removed_course`
+FOR EACH ROW
+BEGIN
+  SET NEW.available_date = DATE_ADD(NOW(), INTERVAL 1 YEAR);
+END//
+
+DELIMITER ;
